@@ -19,7 +19,7 @@ void applicationStartup(struct Account accounts[], int account_size);
 int menuLogin(struct Account accounts[], int account_size);
 void menuAgent(struct Account accounts[], int account_size, struct Account loggedin_user);
 
-int findAccountIndexByAcctNum(int acc_num,struct Account accounts[], int arrsize,char acc_type );
+int findAccountIndexByAcctNum(int acc_num_to_find, struct Account accounts[], int arrsize, int prompt_acc_num);
 void displayAllAccountsSummaryRecords(struct Account accounts[], int arrSize);
 void displayAllAccountsDetailRecords(struct Account accounts[], int arrSize);
 

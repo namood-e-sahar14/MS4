@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include <time.h>
+#include <string.h>
 #include "commonHelpers.h"
 #include "account.h"
 #include "accountTicketingUI.h"
@@ -141,7 +142,7 @@ int getIntFromRange(int lower_bound, int upper_bound)
 }
 
 // get CharoOption function defination
-char getCharOption(char* string_arr)
+char getCharOption(char *string_arr)
 {
 	char my_char;
 	char newLine = 'x';
@@ -163,13 +164,13 @@ char getCharOption(char* string_arr)
 
 		if (found == 0)
 		{
-			clearStandardInputBuffer();
-			printf("Character must be one of [%s]: ", string_arr);
+			printf("Character must be one of [%c%c]: ", string_arr[0], string_arr[1]);
 		}
 		else {
 			num = 0;
 		}
 	}
+
 	return my_char;
 }
 

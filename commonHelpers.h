@@ -20,7 +20,7 @@ int getPositiveInteger(void);
 double getDouble(void);
 double getPositiveDouble(void);
 int getIntFromRange(int lower_bound, int upper_bound);
-char getCharOption(char* string_arr);
-void getCString(char* string, int minimum, int maximum);
+char getCharOption(char *string_arr);
+void getCString(char *string, int minimum, int maximum);
 #endif //COMMON_HELPERS_
 #pragma once

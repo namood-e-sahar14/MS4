@@ -63,20 +63,20 @@ int menuLogin(struct Account accounts[], int arrSize)
         }
         else if (selection == 0)
         {
-            return -1;
+            char approval;
+            printf("Do you realy want to exit the Application? ");
+            char acc_type[3] = { 'Y', 'N', '\n' };
+            approval = getCharOption(acc_type);
+
+            if (approval == 'Y') {
+                return -1;
+            }
         }
         else if (selection == 1)
         {
-            found = -1;
             // enter account num
             printf("Enter your account#: ");
-            account_num = getPositiveInteger();
-            for (i = 0; i < arrSize; i++) {
-                if (accounts[i].account_num == account_num) {
-                    found = i;
-                    break;
-                }
-            }
+            int found = findAccountIndexByAcctNum(0, accounts, arrSize, 1);
 
             if (found != -1) {
                 return found;
@@ -120,16 +120,11 @@ void menuAgent(struct Account accounts[], int arrSize, struct Account loggedin_u
         }
         else if (selection == 1)
         {
-            found = -1;
-            for (i = 0; i < arrSize; i++) {
-                if (accounts[i].account_num == 0) {
-                    found = i;
-                    break;
-                }
-            }
-
+            int found = findAccountIndexByAcctNum(0, accounts, arrSize, 0);
             if (found != -1) {
                 getAccount(&accounts[found]);
+                getUserLogin(&accounts[found]);
+                getDemographic(&accounts[found]);
             }
             else {
                 printf("ERROR: Account listing is FULL, call ITS Support!\n");
@@ -139,16 +134,9 @@ void menuAgent(struct Account accounts[], int arrSize, struct Account loggedin_u
         }
         else if (selection == 2)
         {
-            found = -1;
             // enter account num
             printf("Enter account number: ");
-            account_num = getPositiveInteger();
-            for (i = 0; i < arrSize; i++) {
-                if (accounts[i].account_num == account_num) {
-                    found = i;
-                }
-            }
-
+            int found = findAccountIndexByAcctNum(0, accounts, arrSize, 1);
             if (found != -1) {
                 updateAccount(&accounts[found], arrSize);
             }
@@ -160,15 +148,9 @@ void menuAgent(struct Account accounts[], int arrSize, struct Account loggedin_u
         }
         else if (selection == 3)
         {
-            found = -1;
-           
             printf("Enter account number: ");
             account_num = getPositiveInteger();
-            for (i = 0; i < arrSize; i++) {
-                if (accounts[i].account_num == account_num) {
-                    found = i;
-                }
-            }
+            int found = findAccountIndexByAcctNum(account_num, accounts, arrSize, 0);
             if (found != -1) {
                 if (account_num == loggedin_user.account_num) {
                     printf("You cannot delete logged in user.\n");
@@ -205,49 +187,24 @@ void menuAgent(struct Account accounts[], int arrSize, struct Account loggedin_u
         }
     }
 }
-  /*int findAccountIndexByAcctNum(int acc_num, struct Account, int arrsize, char acc_type)
+
+int findAccountIndexByAcctNum(int acc_num_to_find, struct Account accounts[], int arrSize, int prompt_user)
 {
-    {
-            found = -1;
-            for (i = 0; i < arrSize; i++) {
-                if (accounts[i].account_num == 0) {
-                    found = i;
-                    break;
-                }
-            }
+    if (prompt_user == 1) {
+        acc_num_to_find = getPositiveInteger();
+    }
 
-            if (found != -1) {
-                getAccount(&accounts[found]);
-            }
-            else {
-                printf("ERROR: Account listing is FULL, call ITS Support!\n");
-                printf("<< ENTER key to Continue... >>\n");
-                clearStandardInputBuffer();
-            }
+    int i,found = -1;
+    for (i = 0; i < arrSize; i++) {
+        if (accounts[i].account_num == acc_num_to_find) {
+            found = i;
+            break;
         }
-        else if (selection == 2)
-        {
-            found = -1;
-            // enter account num
-            printf("Enter account number: ");
-            account_num = getPositiveInteger();
-            for (i = 0; i < arrSize; i++) {
-                if (accounts[i].account_num == account_num) {
-                    found = i;
-                }
-            }
+    }
 
-            if (found != -1) {
-                updateAccount(&accounts[found], arrSize);
-            }
-            else {
-                printf("Account Number not found.\n");
-                printf("<< ENTER key to Continue... >>\n");
-                clearStandardInputBuffer();
-            }
-        }
+    return found;
 }
-*/
+
 void updateAccount(struct Account *account_to_update, int arrSize)
 {
     //display selection
